@@ -135,7 +135,7 @@ private IBL _bl;
                 List<StoreFront> allStoreFront = _bl.GetStoreFronts();
                 foreach(StoreFront showStoreFront in allStoreFront)
                 {
-                    Console.WriteLine($"StoreID: {showStoreFront.StoreID} PaintLocker: {showStoreFront.Name} Address: {showStoreFront.Address}");
+                    Console.WriteLine($"StoreID: {showStoreFront.StoreID} PaintLocker {showStoreFront.Name} Address: {showStoreFront.Address}");
                 }
                 Console.Write("StoreFrontID: ");
                 String sID = Console.ReadLine();
@@ -167,6 +167,7 @@ private IBL _bl;
                         break;
                     }
                 }
+                
                 Console.Write("Starting Inventory: ");
                 int quantity = Convert.ToInt32(Console.ReadLine());
                 
@@ -177,7 +178,23 @@ private IBL _bl;
                     ProductDescription = thisProduct.Description,
                     ProductPrice = thisProduct.Price
                 };
-                _bl.addInventory(storeID, productID, newInventory);
+                Inventory checkInventory = new Inventory();
+                List<Inventory> allInventory = _bl.GetInventories();
+                foreach(Inventory searchInventory in allInventory)
+                {
+                    if(searchInventory.ProductName == newInventory.ProductName && searchInventory.StoreID == newInventory.StoreID)
+                    {
+                        checkInventory = searchInventory;
+                        break;
+                    }
+                }
+                if (checkInventory.ProductName == null)
+                {
+                    Console.WriteLine($"This store already sells {newInventory.ProductName}");
+                    continue;
+                }
+                _bl.addInventory(storeID, productID, newInventory);                
+                Console.WriteLine($"{thisProduct.Name} added");
                 break;
                 case "4":
                 bool adminView = false;
