@@ -16,7 +16,7 @@ public class FileRepo : IRepo
     public List<Customer> GetCustomers()
     { 
         String jsonCustomer = File.ReadAllText(fileCustomer);
-        return JsonSerializer.Deserialize<List<Customer>>(jsonCustomer); //?? new List<Customer>();
+        return JsonSerializer.Deserialize<List<Customer>>(jsonCustomer) ?? new List<Customer>();
     }
 
     public void AddCustomer(Customer newCustomer)
@@ -37,7 +37,7 @@ public class FileRepo : IRepo
     public List<Admin> GetAdmin()
     { 
         String jsonAdmin = File.ReadAllText(fileAdmin);
-        return JsonSerializer.Deserialize<List<Admin>>(jsonAdmin);
+        return JsonSerializer.Deserialize<List<Admin>>(jsonAdmin) ?? new List<Admin>();
     }
 
     public void AddAdmin(Admin newAdmin)
@@ -50,7 +50,7 @@ public class FileRepo : IRepo
     public List<StoreFront> GetStoreFronts()
     {
         String jsonStoreFront = File.ReadAllText(fileStoreFront);
-        return JsonSerializer.Deserialize<List<StoreFront>>(jsonStoreFront);
+        return JsonSerializer.Deserialize<List<StoreFront>>(jsonStoreFront) ?? new List<StoreFront>();
     }
 
     public void addStoreFront(StoreFront newStore)
@@ -77,7 +77,7 @@ public class FileRepo : IRepo
     public List<Product> GetProducts()
     {
         String jsonProduct = File.ReadAllText(fileProduct);   
-        return JsonSerializer.Deserialize<List<Product>>(jsonProduct);
+        return JsonSerializer.Deserialize<List<Product>>(jsonProduct) ?? new List<Product>();
     }
 
     public void addProducts(Product newProduct)
@@ -98,10 +98,10 @@ public class FileRepo : IRepo
     public List<Inventory> GetInventories()
     {
         String jsonInventory = File.ReadAllText(fileInventory);
-        return JsonSerializer.Deserialize<List<Inventory>>(jsonInventory);
+        return JsonSerializer.Deserialize<List<Inventory>>(jsonInventory) ?? new List<Inventory>();
     }
 
-    public void addInventory(int StoreID, int ProductID, Inventory newInventory)
+    public void addInventory(Inventory newInventory)
     {
         List<Inventory> allInventory = GetInventories();
         allInventory.Add(newInventory);         
@@ -116,7 +116,7 @@ public class FileRepo : IRepo
         File.WriteAllText(fileInventory, jsonInventoryRemove);
     }
 
-    public void updateInventory(int quantity, int inventoryID, Inventory updateInventory)
+    public void updateInventory(int? quantity, Inventory updateInventory)
     {       
         String jsonInventoryupdate = JsonSerializer.Serialize(updateInventory);
         File.WriteAllText(fileInventory, jsonInventoryupdate);
@@ -125,10 +125,10 @@ public class FileRepo : IRepo
     public List<LineItem> getLineItem()
     {       
         String jsonLineItem = File.ReadAllText(fileLineItem);
-        return JsonSerializer.Deserialize<List<LineItem>>(jsonLineItem);       
+        return JsonSerializer.Deserialize<List<LineItem>>(jsonLineItem) ?? new List<LineItem>();       
     }
 
-    public void addLineItem(int OrderID, int ProductID, LineItem newLineItem)
+    public void addLineItem(LineItem newLineItem)
     {
         List<LineItem> allLineItem = getLineItem();
         allLineItem.Add(newLineItem);
@@ -152,10 +152,10 @@ public class FileRepo : IRepo
     public List<Order> getOrders()
     {
         String jsonOrder = File.ReadAllText(fileOrder);
-        return JsonSerializer.Deserialize<List<Order>>(jsonOrder);
+        return JsonSerializer.Deserialize<List<Order>>(jsonOrder) ?? new List<Order>();
     }
 
-    public void addOrder(int CustomerID, int StoreID, Order newOrder)
+    public void addOrder(Order newOrder)
     {
         List<Order> addOrder = getOrders();
         addOrder.Add(newOrder);
@@ -164,8 +164,29 @@ public class FileRepo : IRepo
 
     }
 
-    public void updateOrder(decimal totalPlus, int orderID, Order updateOrder)
+    public void updateOrder(decimal? totalPlus, Order updateOrder)
     {
 
+    }
+
+    public StoreFront searchStoreFront(int? storeID)
+    {
+        throw new NotImplementedException();
+    }
+    public Product searchProduct(int? productID)
+    {
+        throw new NotImplementedException();
+    }
+    public Inventory searchInventory(int? inventoryID)
+    {
+        throw new NotImplementedException();
+    }
+    public bool isDuplicate(StoreFront store)
+    {
+        throw new NotImplementedException();
+    }
+    public bool isDuplicate(Product store)
+    {
+        throw new NotImplementedException();
     }
 }

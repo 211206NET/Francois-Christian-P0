@@ -15,14 +15,18 @@ public interface IBL
     void addProducts(Product newProduct);
     void removeProducts(List<Product> allProducts, Product exProduct);
     List<Inventory> GetInventories();
-    void addInventory(int StoreID, int ProductID, Inventory newInventory);
+    void addInventory(Inventory newInventory);
     void removeInventory(List<Inventory> allInventory, Inventory exInventory);
-    void updateInventory(int quantity, int inventoryID, Inventory updateInventory);
+    void updateInventory(int? quantity, Inventory updateInventory);
     List<LineItem> getLineItem();
-    void addLineItem(int OrderID, int ProductID, LineItem newLineItem);
+    void addLineItem(LineItem newLineItem);
     void removeLineItem(List<LineItem> removeLineItem, LineItem exLineItem);
     void clearLineItem(List<LineItem> clearLineItem);
     List<Order> getOrders();
-    void addOrder(int CustomerID, int StoreID, Order newOrder);
-    void updateOrder(decimal totalPlus, int orderID, Order updateOrder);
+    void addOrder(Order newOrder);
+    void updateOrder(decimal? totalPlus, Order updateOrder);
+    StoreFront searchStoreFront(int? storeID);
+    Product searchProduct(int? productID);
+    Inventory searchInventory(int? inventoryID);
+
 }

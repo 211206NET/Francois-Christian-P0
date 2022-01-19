@@ -4,18 +4,17 @@ namespace Models;
 
 public class Product
 {
-    public int ProductID{get;set;}
-    private string _name{get;set;}
-    private string _description{get;set;} 
-    public String Name
+    public int? ProductID{get;set;}
+    private string? _name{get;set;}
+    public String? Name
     {
         get => _name;
         set
         {          
             Regex pattern = new Regex("^[a-zA-Z0-9 ']+$");
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
-                throw new InputInvalidException("Name cant be empty");
+                throw new InputInvalidException("No input entered");
             }
             else if (!pattern.IsMatch(value))
             {
@@ -27,15 +26,16 @@ public class Product
             }
         }
     }
-    public String Description
+    private string? _description{get;set;} 
+    public String? Description
     {
         get => _description;
         set
         {          
             Regex pattern = new Regex("^[a-zA-Z ']+$");
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
-                throw new InputInvalidException("Description cant be empty");
+                throw new InputInvalidException("No input entered");
             }
             else if (!pattern.IsMatch(value))
             {
@@ -47,7 +47,22 @@ public class Product
             }
         }
     }
-    public decimal Price{get;set;}
+    private decimal? _price{get;set;}
+    public decimal? Price
+    {
+        get => _price;
+        set
+        {
+            if(value < 0)
+            {
+                throw new InputInvalidException("Price must be greater than 0");
+            }
+            else
+            {
+                this._price = value;
+            }
+        }
+    }
 
     public override string ToString()
     {

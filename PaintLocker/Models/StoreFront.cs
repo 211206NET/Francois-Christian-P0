@@ -3,14 +3,14 @@ namespace Models;
 public class StoreFront
 {
     
-    private string _name;
-    public String Name
+    private string? _name;
+    public String? Name
     {
         get => _name;
         set 
         {
             Regex pattern = new Regex("^[a-zA-Z0-9 ']+$");
-            if (string.IsNullOrEmpty(value))
+            if (string.IsNullOrWhiteSpace(value))
             {
                 throw new InputInvalidException("No input entered");
             }
@@ -25,16 +25,16 @@ public class StoreFront
         }
     }
 
-    private string _address;
-    public String Address
+    private string? _address;
+    public String? Address
     {
         get => _address;
         set
         {
-            Regex pattern = new Regex("^[a-zA-Z0-9 ]+$");
-            if (string.IsNullOrEmpty(value))
+            Regex pattern = new Regex("^[a-zA-Z0-9 ']+$");
+            if (string.IsNullOrWhiteSpace(value))
             {
-                throw new InputInvalidException("Address cant be empty");
+                throw new InputInvalidException("No input entered");
             }
             else if (!pattern.IsMatch(value))
             {
@@ -46,9 +46,9 @@ public class StoreFront
             }
         }
     }
-    public int StoreID {get;set;}
-    public List<Inventory> Inventories{get;set;}
-    public List<Order> Orders{get;set;}
+    public int? StoreID {get;set;}
+    public List<Inventory>? Inventories{get;set;}
+    public List<Order>? Orders{get;set;}
     public StoreFront()
     {}
 

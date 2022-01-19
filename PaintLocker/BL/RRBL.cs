@@ -41,7 +41,11 @@ public class RRBL : IBL
 
     public void addStoreFront(StoreFront newStore)
     {
+        if(!_dl.isDuplicate(newStore))
+        {
         _dl.addStoreFront(newStore);
+        }
+        else throw new DuplicateRecordException("A Store with same name already exists!");
     }
 
     public void removeStoreFront(List<StoreFront> allStores, StoreFront exStore)
@@ -61,7 +65,11 @@ public List<Product> GetProducts()
 
     public void addProducts(Product newProduct)
     {
+        if(!_dl.isDuplicate(newProduct))
+        {
         _dl.addProducts(newProduct);
+        }
+        else throw new DuplicateRecordException("A Product with same name already exists!");
     }
     public void removeProducts(List<Product> allProducts, Product exProduct)
     {        
@@ -72,9 +80,9 @@ public List<Product> GetProducts()
         return _dl.GetInventories();
     }
 
-    public void addInventory(int StoreID, int ProductID, Inventory newInventory)
+    public void addInventory(Inventory newInventory)
     {
-        _dl.addInventory(StoreID, ProductID, newInventory);
+        _dl.addInventory(newInventory);
     }
 
     public void removeInventory(List<Inventory> allInventory, Inventory exInventory)
@@ -82,9 +90,9 @@ public List<Product> GetProducts()
         _dl.removeInventory(allInventory, exInventory);
     }
 
-    public void updateInventory(int quantity, int inventoryID, Inventory updateInventory)
+    public void updateInventory(int? quantity, Inventory updateInventory)
     {       
-        _dl.updateInventory(quantity, inventoryID, updateInventory);
+        _dl.updateInventory(quantity, updateInventory);
     }
     
     public List<LineItem> getLineItem()
@@ -92,9 +100,9 @@ public List<Product> GetProducts()
         return _dl.getLineItem();    
     }
 
-    public void addLineItem(int OrderID, int ProductID, LineItem newLineItem)
+    public void addLineItem(LineItem newLineItem)
     {
-        _dl.addLineItem(OrderID, ProductID, newLineItem);
+        _dl.addLineItem(newLineItem);
     }
 
     public void removeLineItem(List<LineItem> removeLineItem, LineItem exLineItem)
@@ -102,7 +110,7 @@ public List<Product> GetProducts()
         _dl.removeLineItem(removeLineItem, exLineItem);
     }
 
-public void clearLineItem(List<LineItem> clearLineItem)
+    public void clearLineItem(List<LineItem> clearLineItem)
     {
         _dl.clearLineItem(clearLineItem);
     }
@@ -111,12 +119,24 @@ public void clearLineItem(List<LineItem> clearLineItem)
         return _dl.getOrders();
     }
     
-    public void addOrder(int CustomerID, int StoreID, Order newOrder)
+    public void addOrder(Order newOrder)
     {
-        _dl.addOrder(CustomerID, StoreID, newOrder);
+        _dl.addOrder(newOrder);
     }
-    public void updateOrder(decimal totalPlus, int orderID, Order updateOrder)
+    public void updateOrder(decimal? totalPlus, Order updateOrder)
     {
-        _dl.updateOrder(totalPlus, orderID, updateOrder);
+        _dl.updateOrder(totalPlus, updateOrder);
+    }
+    public StoreFront searchStoreFront(int? storeID)
+    {
+        return _dl.searchStoreFront(storeID);
+    }
+    public Product searchProduct(int? productID)
+    {
+        return _dl.searchProduct(productID);
+    }
+    public Inventory searchInventory(int? inventoryID)
+    {
+        return _dl.searchInventory(inventoryID);
     }
 }

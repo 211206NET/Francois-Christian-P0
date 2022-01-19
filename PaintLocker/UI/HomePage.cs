@@ -17,7 +17,7 @@ public class HomePage : IMenu
         {
             Console.WriteLine("Welcome to PaintLocker\nThe #1 spot for replica paintings");
             Console.WriteLine("1. Log in\n2. Create account\n3. Close");
-            String loginPick = Console.ReadLine();  
+            String? loginPick = Console.ReadLine();  
             if (!String.IsNullOrWhiteSpace(loginPick))
             {       
                 switch(loginPick)
